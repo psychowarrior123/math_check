@@ -35,11 +35,11 @@ $(".clear").click(function(){
 })
 
 $(".del").click(function() {
-	for (let i=0; i<=itemsArray.length; i++) {
-		if ($("checkbox").prop("checked", true)) {
-			itemsArray.splice(i, 1)
-			localStorage.setItem('items', JSON.stringify(itemsArray));
-			$("input:checked").parent(".checkbox").remove();
-		}
+	let prnt = $("input:checked").parent(".checkbox")
+	let hts = prnt.children('span').html()
+	let get = localStorage.getItem('items')
+	if (get == hts) {
+		localStorage.removeItem('items')
 	}
+	prnt.remove();
 })
