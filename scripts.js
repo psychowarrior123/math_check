@@ -2,7 +2,10 @@ const form = document.getElementsByClassName('item-form').item(0)
 const checklist = document.getElementsByClassName('checklist').item(0)
 const clearAll = document.getElementsByClassName('clear-all').item(0)
 const clearDone =  document.getElementsByClassName('clear-done').item(0)
-const input = document.getElementsByTagName('input').item(0)
+const input = document.getElementsByClassName('item-input').item(0)
+const taskTitle = document.getElementsByClassName('title').item(0)
+const titleForm = document.getElementsByClassName('title-form').item(0)
+const titleInput = document.getElementsByClassName('title-input').item(0)
 
 // task getter
 const getTasks = () => {
@@ -13,13 +16,32 @@ const getTasks = () => {
 // global task
 let userTasks = getTasks()
 
+// title getter
+const getTitle = () => {
+	const items = localStorage.getItem('title')
+	return items ? JSON.parse(items) : []
+}
+
+//global title
+let userTitle = getTitle()
+
 // task setter
 const setTasksToStorage = () => {
 	localStorage.setItem('tasks', JSON.stringify(userTasks));
 }
 
-// checkboxAdder
+// title setter
+const setTitleToStorage = () => {
+	localStorage.setItem('title', JSON.stringify(userTitle));
+}
 
+// titleAdder
+const createTitle = (id, value) => {
+	taskTitle.appendChild(document.createTextNode(value));
+	taskTitle.id = id;
+}
+
+// checkboxAdder
 const createCheckbox = (id, value, isChecked = false) => {
 	const container = document.createElement('div');
 	const checkbox = document.createElement('input')
@@ -31,17 +53,36 @@ const createCheckbox = (id, value, isChecked = false) => {
 		checkbox.checked = true
 	}
 	label.htmlFor = id;
-	label.appendChild(document.createTextNode(value));
+	label.className = "task"
+	label.appendChild(document.createTextNode(value+';'));
 	container.appendChild(checkbox);
 	container.appendChild(label)
 	checklist.appendChild(container)
 	checkbox.addEventListener('change', setChecked)
 }
 
+// title renderer
+
+const renderTitle = title => {
+	title.forEach(({id, value}) => createTitle(id, value))
+}
+
 // task renderer
 
 const renderTasks = tasks => {
 	tasks.forEach(({ id, value, isChecked }) => createCheckbox(id, value, isChecked))
+}
+
+// title appender
+const appendTitle = title => {
+	const titleId = Math.random().toString(36).substr(2, 5)
+	createTitle(titleId, title)
+	const titleItem = {
+		value: title,
+		id: titleId
+	}
+	userTitle.push(titleItem)
+	setTitleToStorage();
 }
 
 // task appender
@@ -70,6 +111,7 @@ const setChecked = e => {
 }
 // invoked functions
 renderTasks(userTasks)
+renderTitle(userTitle)
 
 // submit
 form.addEventListener('submit', function (e) {
@@ -78,9 +120,21 @@ form.addEventListener('submit', function (e) {
 	input.value = ''
 })
 
+// submitTitle
+titleForm.addEventListener('submit', function (e){
+	e.preventDefault()
+	userTitle = []
+	taskTitle.innerHTML = ''
+	appendTitle(titleInput.value)
+	titleInput.value = ''
+})
+
 clearAll.addEventListener('click', ()=> {
 	localStorage.clear()
+	userTitle = []
+	userTasks = []
 	checklist.innerHTML = ''
+	taskTitle.innerHTML = ''
 })
 
 clearDone.addEventListener('click', () => {
