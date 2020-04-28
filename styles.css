@@ -4,3 +4,12 @@ label {
 input[type='checkbox'] {
     margin-right: 4px;
 }
+
+.title {
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.task {
+    font-style: italic;
+}
