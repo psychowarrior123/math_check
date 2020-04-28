@@ -3,6 +3,7 @@ body {
 }
 
 label {
+    font-style: italic;
     display: inline;
 }
 input[type='checkbox'] {
@@ -14,5 +15,5 @@ input[type='checkbox'] {
 }
 
 .task {
-    font-style: italic;
+    vertical-align: center;
 }

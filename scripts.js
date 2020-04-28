@@ -53,7 +53,7 @@ const createCheckbox = (id, value, isChecked = false) => {
 		checkbox.checked = true
 	}
 	label.htmlFor = id;
-	label.className = "task"
+	checkbox.className = "task"
 	label.appendChild(document.createTextNode(value+';'));
 	container.appendChild(checkbox);
 	container.appendChild(label)
