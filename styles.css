@@ -1,19 +1,15 @@
+.valid {
+  border: 1px solid #00FF00!important;
+}
+
+.valid:focus {
+  background-color: rgb(194, 248, 194)!important;
+}
+
+.is-invalid:focus {
+  background-color: rgb(255, 158, 147)!important;
+}
+
 body {
-    background-image: url(./img/background.png);
-}
-
-label {
-    font-style: italic;
-    display: inline;
-}
-input[type='checkbox'] {
-    margin-right: 4px;
-}
-
-.title {
-    text-transform: uppercase;
-}
-
-.task {
-    vertical-align: center;
+  background-image: url(https://kartinkinaden.ru/uploads/posts/2020-07/1593812509_35-p-fon-matematika-48.jpg);
 }
